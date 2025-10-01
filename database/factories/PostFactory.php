@@ -15,14 +15,15 @@ class PostFactory extends Factory
     public function definition(): array
     {
         $title = fake()->realText(50);
+        $slug = Str::slug($title);
         $randomHexColor = str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
         return [
             'title' => $title,
             'user_id' => User::factory(),
             'category' => fake()->city(),
-            'slug' => Str::slug($title),
+            'slug' => $slug,
             'body' => $this->faker->realText(6000),
-            'image' => "https://placehold.co/800x400/$randomHexColor/ffffff?text=$title",
+            'image' => "https://placehold.co/800x400/$randomHexColor/ffffff?text=$slug",
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

@@ -24,13 +24,15 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $name = fake()->userName();
+        $firstChar = strtoupper($name[0]);
         $randomHexColor = str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
         return [
             'name' => $name,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'image' => "https://placehold.co/400x400/$randomHexColor/ffffff?text=$name[0]",
+            'image' => "https://placehold.co/400x400/$randomHexColor/ffffff?text=$firstChar",
+            'bio' => fake()->realText(100),
             'remember_token' => Str::random(10),
         ];
     }

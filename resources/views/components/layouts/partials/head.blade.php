@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield("title","بلاگ‌پلاس | مرکز دانش مدرن")</title>
+    <title>{{ ($title != null) ? "بلاگ‌پلاس | $title" : "بلاگ‌پلاس | مرکز دانش مدرن" }}</title>
 
     <!-- SEO & Social Meta Tags -->
     <meta name="description" content="بلاگ‌پلاس، مرکز دانش مدرن برای مقالات تکنولوژی، برنامه‌نویسی و طراحی.">

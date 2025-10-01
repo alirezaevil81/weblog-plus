@@ -1,27 +1,28 @@
 @props([
     'hero' => false,
-    'sidebar' => false
+    'sidebar' => false,
+    'title' => null
 ])
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" class="scroll-smooth" data-theme="dark">
-<x-layouts.head/>
+<x-layouts.partials.head :title="$title"/>
 <body class="antialiased">
 
-<x-layouts.header/>
+<x-layouts.partials.header/>
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24">
     @if($hero)
-        <x-layouts.hero/>
+        <x-layouts.partials.hero/>
     @endif
     <div {{ $attributes }} >
         <!-- Main Content -->
         {{ $slot }}
         @if($sidebar)
-            <x-layouts.sidebar/>
+            <x-layouts.partials.sidebar/>
         @endif
     </div>
 </main>
 
-@include("components.layouts.footer")
+<x-layouts.partials.footer/>
 
 @vite("resources/js/app.js")
 </body>

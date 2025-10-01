@@ -28,13 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     openMenuBtn.addEventListener('click', toggleMenu);
     closeMenuBtn.addEventListener('click', toggleMenu);
 
-    // --- Header Scroll Effect ---
+    // --- Header Scroll Effect (FIXED) ---
     const header = document.getElementById('main-header');
     window.addEventListener('scroll', () => {
         const isScrolled = window.scrollY > 10;
         header.classList.toggle('shadow-md', isScrolled);
-        header.classList.toggle('border-b', isScrolled);
         header.classList.toggle('border-slate-200/80', isScrolled);
+        header.classList.toggle('border-transparent', !isScrolled);
     });
 
     // --- Reveal on Scroll Animation ---

@@ -7,11 +7,26 @@
                     خوشحالیم که دوباره شما را می‌بینیم!
                 </p>
             </div>
-            <form class="space-y-6" action="#" method="POST">
+
+            <!-- Error Message Area -->
+            @if($errors->any())
+                <div id="error-container" class="bg-red-100 border space-y-1 border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                    @foreach($errors->all() as $error)
+                        <div class="flex">
+                            <svg class="fill-current size-4 text-red-500 me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM11.414 10l2.829-2.829a1 1 0 0 0-1.414-1.414L10 8.586 7.172 5.757a1 1 0 0 0-1.414 1.414L8.586 10l-2.829 2.829a1 1 0 1 0 1.414 1.414L10 11.414l2.829 2.829a1 1 0 0 0 1.414-1.414L11.414 10z"/></svg>
+                            <p id="error-message" class="font-bold text-xs">{{ $error }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <form class="space-y-6" action="{{ route('login') }}" method="POST">
+                @csrf
                 <div>
                     <label for="email" class="block text-sm font-medium text-slate-700">آدرس ایمیل</label>
                     <div class="mt-1">
-                        <input id="email" name="email" type="email" autocomplete="email" required
+                        <input dir="ltr" id="email" name="email" type="email" autocomplete="email" required
+                               value="{{ old('email') }}"
                                class="w-full px-4 py-2.5 rounded-lg border border-slate-300 placeholder-slate-400 focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500 transition outline-none">
                     </div>
                 </div>
@@ -19,7 +34,7 @@
                 <div>
                     <label for="password" class="block text-sm font-medium text-slate-700">رمز عبور</label>
                     <div class="mt-1">
-                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                        <input dir="ltr" id="password" name="password" type="password" autocomplete="current-password" required
                                class="w-full px-4 py-2.5 rounded-lg border border-slate-300 placeholder-slate-400 focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500 transition outline-none">
                     </div>
                 </div>

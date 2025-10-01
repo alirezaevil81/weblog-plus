@@ -9,7 +9,7 @@
                         </div>
                         <div class="p-6 md:p-8">
                             <span class="inline-block bg-indigo-100 text-indigo-800 text-sm font-semibold px-3 py-1 rounded-full mb-4">{{ $post->category }}</span>
-                            <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4"><a href="#" class="hover:text-indigo-600 transition-colors">{{ $post->title }}</a></h3>
+                            <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4"><a href="{{ route("posts.show",$post->slug) }}" class="hover:text-indigo-600 transition-colors">{{ $post->title }}</a></h3>
                             <p class="text-slate-600 leading-relaxed mb-6 line-clamp-3">{{ \Illuminate\Support\Str::limit($post->body,30) }}</p>
                             <div class="flex items-center mt-auto">
                                 <img class="w-12 h-12 rounded-full me-4 object-cover" src="{{$post->user->image}}" alt="پروفایل">
