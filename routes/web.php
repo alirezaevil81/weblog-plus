@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ Route::get('posts/{post:slug}', function (Post $post) {
     $post->load(['user', 'comments']);
     return view('posts.show',compact('post'));
 })->name('posts.show');
+
+Route::resource('users',UserController::class)->parameters(['users' => 'user:name'])->only('show');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [LoginController::class, 'show'])->name('login');

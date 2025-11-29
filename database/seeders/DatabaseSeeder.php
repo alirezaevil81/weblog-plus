@@ -15,11 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // ساخت کاربر ادمین با مشخصات دلخواه
+        User::factory()->define(
+            'alireza',
+            'alirezask385@gmail.com',
+            'alireza1381'
+        )->create();
         // ایجاد 10 کاربر فیک
-        $users = User::factory(10)->create();
+        $users = User::factory(4)->create();
 
         // ایجاد 20 پست فیک با کاربران تصادفی
-        $posts = Post::factory(20)->create([
+        $posts = Post::factory(5)->create([
             'user_id' => function() use ($users) {
                 return $users->random()->id;
             }

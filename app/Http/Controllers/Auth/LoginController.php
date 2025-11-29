@@ -10,7 +10,6 @@ class LoginController extends Controller
 {
     public function show()
     {
-        \auth()->loginUsingId(1);
         return view('users.auth.login');
     }
 
