@@ -11,6 +11,9 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
+
     @vite("resources/css/app.css")
 
     <!-- Tailwind Config -->
