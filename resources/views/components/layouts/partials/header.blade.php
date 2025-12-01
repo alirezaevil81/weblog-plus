@@ -1,4 +1,4 @@
-<header id="main-header" class="bg-transparent fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+<header id="main-header" class="bg-transparent fixed top-0 left-0 right-0 z-50 transition-all duration-500">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             <!-- Logo -->
@@ -26,7 +26,7 @@
                         <button type="button" class="p-1.5 rounded-full ring-2 ring-transparent group-hover:ring-indigo-500 transition-all" aria-label="پروفایل کاربر">
                             <img class="size-8 rounded-full" src="{{ auth()->user()->image }}" alt="آواتار {{ auth()->user()->name }}">
                         </button>
-                        <div class="absolute top-full left-0 w-56 bg-white rounded-xl shadow-lg ring-1 ring-slate-900/5 origin-top-left transform opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 focus:outline-none" role="menu">
+                        <div class="absolute top-full left-0 w-56 bg-white rounded-xl shadow-lg ring-1 ring-slate-900/5 origin-top-left transform opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-in-out focus:outline-none" role="menu">
                             <div class="p-1.5">
                                 <div class="px-3 py-2 border-b border-slate-200/80 mb-1">
                                     <p class="text-sm text-slate-800 font-semibold truncate">{{ auth()->user()->name }}</p>
@@ -51,8 +51,8 @@
 
                 <button id="mobile-menu-button" class="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-opacity duration-300" aria-controls="mobile-menu" aria-expanded="false">
                     <span class="sr-only">باز کردن منو</span>
-                    <svg id="menu-open-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                    <svg id="menu-close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    <svg id="menu-open-icon" class="h-6 w-6 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    <svg id="menu-close-icon" class="h-6 w-6 opacity-0 pointer-events-none transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
         </div>
@@ -60,7 +60,7 @@
 </header>
 
 <!-- Mobile Menu Panel -->
-<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden"></div>
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 <div id="mobile-menu-panel" class="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white shadow-xl z-50 transition-transform duration-300 ease-in-out transform translate-x-full">
     <div class="p-6">
         <div class="flex justify-between items-center mb-10">
@@ -133,26 +133,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function openMenu() {
         document.body.style.overflow = 'hidden';
-        mobileMenuOverlay.classList.remove('hidden');
+        mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
         mobileMenuPanel.classList.remove('translate-x-full');
-        openIcon.classList.add('hidden');
-        closeIcon.classList.remove('hidden');
+        openIcon.classList.add('opacity-0', 'pointer-events-none');
+        closeIcon.classList.remove('opacity-0', 'pointer-events-none');
         openBtn.setAttribute('aria-expanded', 'true');
         headerLogo.classList.add('opacity-0', 'pointer-events-none');
-        openBtn.classList.add('opacity-0', 'pointer-events-none');
+        openBtn.classList.add('opacity-0', 'pointer-events-none'); // Hide the button itself during transition
     }
 
     function closeMenu() {
         document.body.style.overflow = '';
         mobileMenuPanel.classList.add('translate-x-full');
-        setTimeout(() => {
-            mobileMenuOverlay.classList.add('hidden');
-        }, 300);
-        openIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
+        mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
+        openIcon.classList.remove('opacity-0', 'pointer-events-none');
+        closeIcon.classList.add('opacity-0', 'pointer-events-none');
         openBtn.setAttribute('aria-expanded', 'false');
         headerLogo.classList.remove('opacity-0', 'pointer-events-none');
-        openBtn.classList.remove('opacity-0', 'pointer-events-none');
+        openBtn.classList.remove('opacity-0', 'pointer-events-none'); // Show the button itself after transition
     }
 
     openBtn.addEventListener('click', openMenu);
@@ -160,7 +158,8 @@ document.addEventListener('DOMContentLoaded', function () {
     mobileMenuOverlay.addEventListener('click', closeMenu);
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            if (link.getAttribute('aria-label') === 'بستن منو') {
+            // Prevent closing for dropdown-like behaviors if any
+            if (link.closest('[role="menu"]') || link.tagName === 'BUTTON' && link.type === 'submit') {
                 return;
             }
             closeMenu();
