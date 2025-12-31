@@ -1,9 +1,9 @@
 <div class="lg:col-span-8">
     <div class="space-y-12">
-        @if($posts)
+        @if($posts->isNotEmpty())
             @foreach($posts as $post)
                 <!-- Blog Post Card -->
-                <div wire:key="post-{{ $post->id }}" class="reveal bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transform hover:-translate-y-1.5 transition-all duration-300 ease-in-out group hover:shadow-lg hover:shadow-slate-300/40">
+                <div wire:key="post-{{ $post->id }}" class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transform hover:-translate-y-1.5 transition-all duration-300 ease-in-out group hover:shadow-lg hover:shadow-slate-300/40">
                     <div class="overflow-hidden">
                         <img class="w-full h-52 sm:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                              src="{{ $post->image }}" alt="{{ $post->title }}">
@@ -24,17 +24,13 @@
                                         {{ $post->created_at->diffForHumans() }} &middot; {{ $post->reading_time }}</p>
                                 </div>
                             </a>
-                            <a href="{{ route('posts.show', $post->slug) }}"
+                            <a href="{{ route('posts.show', $post->slug) }}" wire:navigate
                                class="w-full sm:w-auto inline-block text-center bg-indigo-500 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-indigo-600 transition-colors">مشاهده
                                 پست</a>
                         </div>
                     </div>
                 </div>
             @endforeach
-            <!-- Pagination -->
-            <div class="mt-12">
-                {{$posts->links("pagination::custom")}}
-            </div>
         @else
             <div class="flex flex-col items-center justify-center p-10 border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 text-center">
                 <div class="bg-gray-200 p-4 rounded-full mb-4">
@@ -53,4 +49,10 @@
         @endif
     </div>
 
+    <!-- Pagination -->
+    @if ($posts->hasPages())
+        <div class="mt-16">
+            {{ $posts->links('pagination::custom') }}
+        </div>
+    @endif
 </div>

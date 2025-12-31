@@ -1,9 +1,11 @@
-<div>
-    <header id="main-header" class="bg-transparent fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+<div x-data="{ menuOpen: false, scrolled: false }"
+     @scroll.window="scrolled = (window.scrollY > 10)">
+    <header :class="{'bg-white/90 backdrop-blur-lg shadow-sm border-slate-200/80': scrolled, 'border-transparent': !scrolled}"
+            class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <a id="header-logo" href="{{ route('home') }}"
+                <a href="{{ route('home') }}"
                    class="flex items-center space-x-2 rtl:space-x-reverse transition-opacity duration-300">
                     <img src="{{ asset('favicon.ico') }}" alt="لوگو بلاگ‌پلاس" class="size-7">
                     <span class="text-2xl font-extrabold text-slate-900">بلاگ‌پلاس</span>
@@ -19,7 +21,7 @@
                 </nav>
 
                 <!-- Actions -->
-                <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                <div class="flex items-center h-full gap-4">
                     @guest
                         <a href="{{ route('login') }}" wire:navigate
                            class="hidden md:inline-block px-4 py-2 text-slate-700 font-medium hover:text-indigo-600 transition-colors">ورود</a>
@@ -28,14 +30,14 @@
                     @endguest
                     @auth
                         <!-- Profile Dropdown for Desktop -->
-                        <div class="relative group hidden md:block">
+                        <div class="relative group hidden md:flex items-center h-full">
                             <button type="button"
-                                    class="rounded-full ring-2 ring-transparent group-hover:ring-indigo-500 transition-all"
-                                    aria-label="پروفایل کاربر">
-                                <img class="size-8 rounded-full" src="{{ auth()->user()->image }}"
+                                    class="flex items-center h-full">
+                                <img class="size-9 rounded-full ring-2 ring-white group-hover:ring-indigo-200 transition-all" src="{{ auth()->user()->image }}"
                                      alt="آواتار {{ auth()->user()->name }}">
                             </button>
-                            <div class="absolute top-full left-0 w-56 bg-white rounded-xl shadow-lg ring-1 ring-slate-900/5 origin-top-left transform opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-in-out focus:outline-none"
+
+                            <div class="absolute top-full left-0 w-56 bg-white rounded-xl shadow-lg ring-1 ring-slate-900/5 origin-top-right transform opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-in-out focus:outline-none"
                                  role="menu">
                                 <div class="p-1.5">
                                     <div class="px-3 py-2 border-b border-slate-200/80 mb-1">
@@ -78,16 +80,15 @@
                         </div>
                     @endauth
 
-                    <button id="mobile-menu-button"
+                    <button @click="menuOpen = !menuOpen"
                             class="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-opacity duration-300"
-                            aria-controls="mobile-menu" aria-expanded="false">
+                            aria-controls="mobile-menu" :aria-expanded="menuOpen.toString()">
                         <span class="sr-only">باز کردن منو</span>
-                        <svg id="menu-open-icon" class="h-6 w-6 transition-opacity duration-300" fill="none"
+                        <svg x-show="!menuOpen" class="h-6 w-6" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
-                        <svg id="menu-close-icon"
-                             class="h-6 w-6 opacity-0 pointer-events-none transition-opacity duration-300" fill="none"
+                        <svg x-show="menuOpen" x-cloak class="h-6 w-6" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -98,25 +99,39 @@
     </header>
 
     <!-- Mobile Menu Panel -->
-    <div id="mobile-menu-overlay"
-         class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
-    <div id="mobile-menu-panel"
-         class="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white shadow-xl z-50 transition-transform duration-300 ease-in-out transform translate-x-full">
+    <div x-show="menuOpen" x-cloak
+         x-transition:enter="transition-opacity ease-in-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-in-out duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click="menuOpen = false"
+         class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"></div>
+
+    <div x-show="menuOpen" x-cloak
+         x-transition:enter="transition-transform ease-in-out duration-300"
+         x-transition:enter-start="translate-x-full"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition-transform ease-in-out duration-300"
+         x-transition:leave-start="translate-x-0"
+         x-transition:leave-end="translate-x-full"
+         class="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white shadow-xl z-50">
         <div class="p-6">
             <div class="flex justify-between items-center mb-10">
                 <a href="{{ route('home') }}" class="flex items-center space-x-2 rtl:space-x-reverse">
                     <img src="{{ asset('favicon.ico') }}" alt="لوگو بلاگ‌پلاس" class="h-7 w-7">
                     <span class="text-2xl font-extrabold text-slate-900">بلاگ‌پلاس</span>
                 </a>
-                <button id="mobile-menu-close-button" class="p-2 text-slate-500" aria-label="بستن منو">
+                <button @click="menuOpen = false" class="p-2 text-slate-500" aria-label="بستن منو">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
-            <nav id="mobile-nav-links" class="flex flex-col space-y-2">
+            <nav class="flex flex-col space-y-2">
                 @foreach($headerNav as $item)
-                    @php $item = (object) $item @endphp
+                    @php $item = (object) $item; @endphp
                     <a href="{{ $item->href }}"  wire:navigate
                        class="block text-lg font-semibold px-4 py-2.5 rounded-lg transition-colors text-slate-800 hover:bg-indigo-50"
                        wire:current.exact="!bg-indigo-100 !text-indigo-600">{{ $item->name }}</a>

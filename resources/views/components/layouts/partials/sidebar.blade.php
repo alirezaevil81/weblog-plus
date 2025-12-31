@@ -7,7 +7,7 @@
 <aside class="lg:col-span-4 mt-12 lg:mt-0">
     <div class="sticky top-28 space-y-8">
         <!-- Popular Posts -->
-        <div class="reveal bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
             <h3 class="text-xl font-bold text-slate-900 mb-6">پست‌های محبوب</h3>
             <ul class="space-y-5">
                 @foreach($random_posts as $post)
@@ -26,7 +26,7 @@
             </ul>
         </div>
         <!-- Newsletter -->
-        <div class="reveal bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
             <h3 class="text-xl font-bold text-slate-900 mb-4">عضویت در خبرنامه</h3>
             <p class="text-slate-600 text-sm mb-4">به ما بپیوندید تا جدیدترین مقالات را مستقیم در ایمیل خود دریافت
                 کنید.</p>

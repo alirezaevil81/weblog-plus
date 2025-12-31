@@ -11,6 +11,7 @@ class Header extends Component
 
     public $headerNav;
     public $profileNav;
+    public bool $menuOpen = false;
 
     public function mount(): void
     {
@@ -40,6 +41,10 @@ class Header extends Component
         }
     }
 
+    public function toggleMenu(): void
+    {
+        $this->menuOpen = !$this->menuOpen;
+    }
 
     public function render()
     {

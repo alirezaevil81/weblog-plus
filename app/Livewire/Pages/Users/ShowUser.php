@@ -20,7 +20,7 @@ class ShowUser extends Component
     public function render()
     {
         return view('livewire.pages.users.show-user', [
-            'posts' => $this->user->posts()->latest()->paginate(10)
+            'posts' => $this->user->posts()->latest()->paginate(4)
         ])->layoutData([
             'title' => $this->user->name,
             'sidebar' => true

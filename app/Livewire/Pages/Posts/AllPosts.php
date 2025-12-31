@@ -13,7 +13,7 @@ class AllPosts extends Component
     public function render()
     {
         return view('livewire.pages.posts.all-posts',[
-            'posts' => Post::paginate(5),
+            'posts' => Post::query()->latest()->paginate(5),
         ])->layoutData([
             'hero' => true,
             'sidebar' => true

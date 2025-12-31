@@ -2,7 +2,7 @@
 <div class="lg:col-span-8">
 
     <!-- Profile Header -->
-    <header class="reveal bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 md:p-8 mb-12">
+    <header class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 md:p-8 mb-12">
         <div class="flex flex-col md:flex-row items-center text-center md:text-start gap-6">
             <img src="{{ $user->image }}" alt="پروفایل {{ $user->name }}"
                  class="w-24 h-24 md:w-28 md:h-28 rounded-full border-4 border-white shadow-md flex-shrink-0">
@@ -40,7 +40,7 @@
                 @foreach($posts as $post)
                     <!-- Blog Post Card -->
                     <div wire:key="post-{{ $post->id }}"
-                         class="reveal bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                         class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
                         <div class="overflow-hidden">
                             <img class="w-full h-52 sm:h-64 object-cover" src="{{ $post->image }}"
                                  alt="{{ $post->title }}">
@@ -54,7 +54,7 @@
                             <div class="flex items-center justify-between mt-auto border-t border-slate-200/80 pt-5">
                                 <p class="text-sm text-slate-500">
                                     {{ $post->created_at->diffForHumans() }} &middot; {{ $post->reading_time }}</p>
-                                <a href="{{ route('posts.show', $post->slug) }}"
+                                <a href="{{ route('posts.show', $post->slug) }}" wire:navigate
                                    class="inline-block bg-indigo-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-indigo-600 transition-colors">مشاهده
                                     پست</a>
                             </div>
@@ -65,7 +65,7 @@
 
             <!-- Pagination -->
             <div class="mt-12">
-                {{ $posts->links("pagination::custom") }}
+                {{ $posts->links('pagination::custom') }}
             </div>
         @else
             <div class="reveal bg-white rounded-2xl border border-slate-200/80 shadow-sm p-8 text-center">

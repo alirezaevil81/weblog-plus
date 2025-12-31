@@ -43,7 +43,7 @@
         <x-layouts.partials.hero/>
     @endif
     @if($sidebar)
-        <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-12 lg:items-start">
             <!-- Main Content -->
             {{ $slot }}
             <x-layouts.partials.sidebar/>
@@ -58,7 +58,7 @@
 
 <x-layouts.partials.footer/>
 
-@vite("resources/js/app.js")
 @livewireScripts
+@vite("resources/js/app.js")
 </body>
 </html>
