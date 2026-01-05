@@ -34,7 +34,13 @@
 </head>
 
 
-<body class="antialiased">
+<body class="antialiased"
+      x-data="{ showNotification: false, notificationMessage: '' }"
+      @comment-added.window="
+          notificationMessage = $event.detail[0];
+          showNotification = true;
+          setTimeout(() => showNotification = false, 5000);
+      ">
 
 <livewire:partials.header/>
 
@@ -57,6 +63,19 @@
 </main>
 
 <x-layouts.partials.footer/>
+
+<!-- Notification Toast -->
+<div x-show="showNotification"
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="transform opacity-0 scale-95"
+     x-transition:enter-end="transform opacity-100 scale-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="transform opacity-100 scale-100"
+     x-transition:leave-end="transform opacity-0 scale-95"
+     class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg"
+     style="display: none;">
+    <p x-text="notificationMessage"></p>
+</div>
 
 @livewireScripts
 @vite("resources/js/app.js")
