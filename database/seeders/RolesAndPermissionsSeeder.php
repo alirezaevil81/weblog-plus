@@ -18,19 +18,20 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
-        Permission::create(['name' => 'edit posts']);
-        Permission::create(['name' => 'delete posts']);
-        Permission::create(['name' => 'publish posts']);
-        Permission::create(['name' => 'unpublish posts']);
+        Permission::create(['name' => 'access dashboard']);
+//        Permission::create(['name' => 'edit posts']);
+//        Permission::create(['name' => 'delete posts']);
+//        Permission::create(['name' => 'publish posts']);
+//        Permission::create(['name' => 'unpublish posts']);
 
         // Create roles and assign created permissions
 
         // this can be done as separate statements
-        $writerRole = Role::create(['name' => 'Writer']);
-        $writerRole->givePermissionTo(['edit posts', 'publish posts']);
+        $writerRole = Role::create(['name' => 'Admin']);
+        $writerRole->givePermissionTo('access dashboard');
 
         // or may be done by chaining
-        $adminRole = Role::create(['name' => 'Admin']);
-        $adminRole->givePermissionTo(Permission::all());
+        /*$adminRole = Role::create(['name' => 'Admin']);
+        $adminRole->givePermissionTo(Permission::all());*/
     }
 }

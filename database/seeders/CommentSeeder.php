@@ -13,7 +13,13 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 50 comments using the factory
+        // Clear the table first
+        Comment::query()->delete();
+
+        // Create 50 top-level comments
         Comment::factory()->count(50)->create();
+
+        // Create 50 replies
+        Comment::factory()->count(50)->reply()->create();
     }
 }
