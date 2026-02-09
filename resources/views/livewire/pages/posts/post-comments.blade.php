@@ -37,12 +37,25 @@
 
     {{-- Comments List --}}
     <div class="space-y-10">
+        {{-- User's Unapproved Comments --}}
+        @if($userUnapprovedComments->isNotEmpty())
+            <div class="space-y-8">
+                <h3 class="text-lg font-bold text-slate-800 border-b border-slate-200 pb-4">دیدگاه‌های در انتظار تایید شما</h3>
+                @foreach($userUnapprovedComments as $comment)
+                    <x-pages.posts.comment-card :comment="$comment" :replyToId="$replyToId" />
+                @endforeach
+            </div>
+        @endif
+
+        {{-- Approved Comments --}}
         @forelse($comments as $comment)
             <x-pages.posts.comment-card :comment="$comment" :replyToId="$replyToId" />
         @empty
-            <div class="p-8 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl text-center">
-                <p class="text-slate-600 font-medium text-base">هنوز هیچ دیدگاهی برای این پست ثبت نشده است. اولین نفر باشید!</p>
-            </div>
+            @if($userUnapprovedComments->isEmpty())
+                <div class="p-8 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl text-center">
+                    <p class="text-slate-600 font-medium text-base">هنوز هیچ دیدگاهی برای این پست ثبت نشده است. اولین نفر باشید!</p>
+                </div>
+            @endif
         @endforelse
     </div>
 </div>

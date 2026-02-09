@@ -16,7 +16,7 @@ class Comment extends Model
         'post_id',
         'body',
         'is_approved',
-        'parent_id', // Add parent_id to fillable
+        'parent_id',
     ];
 
     public function user(): BelongsTo
@@ -29,15 +29,23 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    // Relationship for parent comment
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Comment::class, 'parent_id');
     }
 
-    // Relationship for replies
     public function replies(): HasMany
     {
         return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    /**
+     * Recursive relationship to get all approved nested replies efficiently.
+     */
+    public function approvedReplies(): HasMany
+    {
+        return $this->replies()
+            ->where('is_approved', true)
+            ->with('user', 'approvedReplies'); // Recursively load approved replies
     }
 }

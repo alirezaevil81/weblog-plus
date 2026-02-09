@@ -21,14 +21,15 @@
         </div>
 
         <div class="mt-3 flex items-center gap-4">
-            @auth
+            @can('reply', $comment)
                 <button wire:click="setReplyTo({{ $comment->id }})" type="button" class="flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                     </svg>
                     <span>پاسخ</span>
                 </button>
-            @endauth
+            @endcan
+
             @if($replyToId === $comment->id)
                 <button wire:click="setReplyTo(null)" type="button" class="flex items-center gap-1.5 text-sm font-bold text-red-500 hover:text-red-700 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-4">
@@ -63,9 +64,9 @@
         @endif
 
         {{-- Replies --}}
-        @if($comment->replies->isNotEmpty())
-            <div class="mt-8 pl-8 border-r-2 border-slate-200 space-y-8">
-                @foreach($comment->replies as $reply)
+        @if($comment->approvedReplies->isNotEmpty())
+            <div class="mt-8 px-8 border-r-2 border-slate-200 space-y-8">
+                @foreach($comment->approvedReplies as $reply)
                     <x-pages.posts.comment-card :comment="$reply" :replyToId="$replyToId" />
                 @endforeach
             </div>

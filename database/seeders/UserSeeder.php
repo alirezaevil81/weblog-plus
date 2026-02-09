@@ -21,7 +21,15 @@ class UserSeeder extends Seeder
         )->create();
         $adminUser->assignRole('Admin');
 
+
+        $testUser = User::factory()->define(
+            'test',
+            'test@gmail.com',
+            'test1234'
+        )->create();
+        $testUser->assignRole('User');
+
         // ایجاد 4 کاربر فیک با نقش نویسنده
-        User::factory(4)->create()->each(fn ($user) => $user->assignRole('Writer'));
+        User::factory(4)->create()->each(fn ($user) => $user->assignRole('User'));
     }
 }

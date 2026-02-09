@@ -1,7 +1,7 @@
 <div class="lg:col-span-8">
     <div class="space-y-12">
-        @if($posts->isNotEmpty())
-            @foreach($posts as $post)
+        @if($this->posts->isNotEmpty())
+            @foreach($this->posts as $post)
                 <!-- Blog Post Card -->
                 <div wire:key="post-{{ $post->id }}" class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transform hover:-translate-y-1.5 transition-all duration-300 ease-in-out group hover:shadow-lg hover:shadow-slate-300/40">
                     <div class="overflow-hidden">
@@ -50,9 +50,9 @@
     </div>
 
     <!-- Pagination -->
-    @if ($posts->hasPages())
+    @if ($this->posts->hasPages())
         <div class="mt-16">
-            {{ $posts->links('pagination::custom') }}
+            {{ $this->posts->links('pagination::custom') }}
         </div>
     @endif
 </div>

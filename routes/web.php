@@ -22,5 +22,5 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', Dashboard::class)->name('dashboard')->middleware('can: access dashboard');
+    Route::get('dashboard', Dashboard::class)->name('dashboard')->middleware('can:access dashboard');
 });

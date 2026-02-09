@@ -52,7 +52,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-12 lg:items-start">
             <!-- Main Content -->
             {{ $slot }}
-            <x-layouts.partials.sidebar/>
+            <livewire:partials.sidebar/>
         </div>
     @else
         <div>
